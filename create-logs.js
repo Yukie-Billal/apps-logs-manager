@@ -12,7 +12,7 @@ if (!fs.existsSync(filePath)) {
 
 const getLogs = () => JSON.parse(fs.readFileSync("data/logs.json", "utf-8"))
 
-export const saveLogs = (date, logs, category) => {
+export const saveLogs = (date, log, category) => {
    let logs = getContacts()
    if (!category) {
       console.log(
@@ -21,7 +21,7 @@ export const saveLogs = (date, logs, category) => {
       return false
    }
 
-   logs.push({ name, email, noHp })
+   logs.push({ date, log, category })
    fs.writeFile("data/logs.json", JSON.stringify(logs), () => { })
    console.log(write(`Terima kasih, Logs tersimpan ${date}`, 'success'))
 }
