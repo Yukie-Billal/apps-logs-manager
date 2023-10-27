@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello world</h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="wadah">
+        </tbody>
+    </table>
+
+
+    <script>
+        const wadah = document.querySelector("#wadah")
+
+        async function fetchData() {
+          const res = await fetch('http://localhost:5000/logs')
+          const data = await res.json()
+          if (!data instanceof Array) throw new Error("Invalid response format")
+
+          data.map(log => {
+            wadah.append(`
+                <tr>
+                    <td>${log.date}</td>
+                    <td>${log.log}</td>
+                    <td>${log.category}</td>
+                </tr>
+            `)
+          })
+        }
+
+        fetchData()
+    </script>
+</body>
+</html>
