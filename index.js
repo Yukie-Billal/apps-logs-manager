@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 const app = express()
 
 app.use(bodyParser.json())
+app.use(express.static('assets'))
 
 import LogsRouter from './routes/logs.js'
 import WebRouter from './routes/web.js'
