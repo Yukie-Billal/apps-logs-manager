@@ -2,7 +2,7 @@ import {Router} from 'express'
 
 const router = Router()
 
-import {getAllLogs, saveLogs} from '../create-logs.js'
+import {getAllLogs, saveLogs} from '../utils/logs.js'
 router.get('/', (req, res) => {
     res.json(getAllLogs())
 })

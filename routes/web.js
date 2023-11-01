@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import fs from "fs";
-import {removeLog} from "../create-logs.js";
+import {removeLog} from "../utils/logs.js";
 const router = Router()
 
 router.get('/', (req, res) => {
