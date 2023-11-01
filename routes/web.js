@@ -8,9 +8,4 @@ router.get('/', (req, res) => {
   res.send(isi)
 })
 
-router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  res.send(removeLog(id))
-})
-
 export default router
