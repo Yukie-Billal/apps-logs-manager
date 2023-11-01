@@ -19,7 +19,6 @@ const getLastId = () => {
 
 const setLogs = (logs) => {
    fs.writeFile("data/logs.json", JSON.stringify(logs), () => { })
-   console.log(`Terima kasih, Logs tersimpan ${date}`, 'success')
 }
 
 export const saveLogs = (urgent, date, log, category, app_name) => {
@@ -33,11 +32,15 @@ export const saveLogs = (urgent, date, log, category, app_name) => {
    const id = getLastId()
    logs.push({id, urgent, date, log, category, app_name})
    setLogs(logs)
+   console.log(`Terima kasih, Logs tersimpan ${date}`, 'success')
 }
 
 export const removeLog = (id) => {
    const oldLogs = getAllLogs()
-   const newLogs = oldLogs.filter(i => i.id!==id)
+   const newLogs = oldLogs.filter(i => i.id!=id)
+   console.log(id)
+   console.log(oldLogs)
+   console.log(newLogs)
    setLogs(newLogs)
    return oldLogs[oldLogs.map(l=>l.id).indexOf(id)]
 }
