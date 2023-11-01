@@ -4,10 +4,12 @@ import bodyParser from 'body-parser'
 const app = express()
 
 app.use(bodyParser.json())
+app.use(express.static('assets'))
 
-app.get('/', (req, res) => {
-  res.json({"message": "hello World"})
-})
+import LogsRouter from './routes/logs.js'
+import WebRouter from './routes/web.js'
+app.use('/', WebRouter)
+app.use('/logs', LogsRouter)
 
 import LogsRouter from './routes/logs.js'
 app.use('/logs', LogsRouter)
