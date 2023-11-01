@@ -83,12 +83,11 @@
 
   function deleteLog(e) {
     return async () => {
-        console.log(e)
         const id = e.getAttribute('data-id')
-        const res = await fetch('http://localhost:5000/logs/'+id, {
+        await fetch('http://localhost:5000/logs/'+id, {
           method: 'DELETE'
         })
-        console.log(res)
+        await fetchData()
     }
   }
 </script>
