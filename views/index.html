@@ -25,6 +25,7 @@
                 <th>Date</th>
                 <th>Logs description</th>
                 <th>Category</th>
+                <th></th>
             </tr>
             </thead>
             <tbody id="wadah">
@@ -50,34 +51,46 @@
                 <tr>
                     <td>${getUrgent(log.urgent)}</td>
                     <td>${
-                        new Date(log.date) > new Date().setDate(new Date().getDate() - 1)
-                            ? moment(log.date, 'YYYY-MM-DD hh:mm:ss').fromNow()
-                            : moment(log.date).format('MMMM Do YYYY, h:mm:ss a')
-                    }</td>
+          new Date(log.date) > new Date().setDate(new Date().getDate() - 1)
+              ? moment(log.date, 'YYYY-MM-DD hh:mm:ss').fromNow()
+              : moment(log.date).format('MMMM Do YYYY, h:mm:ss a')
+      }</td>
                     <td>${log.log}</td>
                     <td>${getCategory(log.category)}</td>
+                    <td><button class="delete-button" data-id="${log.id}" onclick="deleteLog()">delete</button></td>
                 </tr>
             `
     })
     wadah.innerHTML = isi
+    document.querySelectorAll('.delete-button').forEach(e => e.onclick = deleteLog(e))
   }
 
   fetchData()
 
   const getUrgent = (urgent) => {
     let color = 'info text-white'
-    if (urgent==='medium') color = 'warning text-white'
-    if (urgent==='hard') color = 'danger text-white'
+    if (urgent === 'medium') color = 'warning text-white'
+    if (urgent === 'hard') color = 'danger text-white'
     return `<button class="btn btn-sm btn-${color}">${urgent}</button>`
   }
 
   const getCategory = (category) => {
     let color = 'info text-white'
-    if (category==='warning') color = 'warning text-white'
-    if (category==='error') color = 'danger text-white'
+    if (category === 'warning') color = 'warning text-white'
+    if (category === 'error') color = 'danger text-white'
     return `<button class="btn btn-sm btn-${color}">${category}</button>`
   }
 
+  function deleteLog(e) {
+    return async () => {
+        console.log(e)
+        const id = e.getAttribute('data-id')
+        const res = await fetch('http://localhost:5000/logs/'+id, {
+          method: 'DELETE'
+        })
+        console.log(res)
+    }
+  }
 </script>
 </body>
 </html>
