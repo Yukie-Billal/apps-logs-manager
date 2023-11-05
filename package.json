@@ -1,11 +1,11 @@
 {
   "name": "apps-logs-manager",
   "version": "1.0.0",
-  "description": "Semantic Logs file in web view",
+  "description": "Semantic App logs manager file in web view",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,10 +15,15 @@
     "logs",
     "manager"
   ],
-  "author": "Yukie muhammad billal",
+  "author": {
+    "name": "Yukie muhammad billal",
+    "email": "yukiembillal01@gmail.com",
+    "url": "https://www.linkedin.com/in/yukie-muhammad-billal-b3bb59271"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Yukie-Billal/apps-logs-manager/issues"
+    "url": "https://github.com/Yukie-Billal/apps-logs-manager/issues",
+    "email": "yukiembillal01@gmail.com"
   },
   "homepage": "https://github.com/Yukie-Billal/apps-logs-manager#readme",
   "dependencies": {
