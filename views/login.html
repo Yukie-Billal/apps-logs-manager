@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOGIN - LOGS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+        }
+
+        .wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, .3);
+            box-shadow: 1px 3px 4px rgba(0, 0, 0, .2);
+            padding: 20px;
+            width: 440px;
+        }
+
+        .card .card-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, .2);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 1.2em;
+            margin-bottom: .8em;
+        }
+
+        .form-group input {
+            font-size: 1em;
+            width: 100%;
+            padding: 10px 0 6px 8px;
+            border-radius: 4px;
+            outline: none;
+            border: 1px solid rgba(0, 0, 0, .30);
+            box-shadow: inset 1px 2px 2px rgba(0, 0, 0, .15);
+        }
+
+        .form-group input:focus {
+            outline: 1px solid #3939d9;
+        }
+
+        .button-submit {
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            background-color: #3939d9;
+            width: 100%;
+            padding: 8px;
+            color: wheat;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <form class="card" action="/" method="post">
+        <h2 class="card-title">Sign in</h2>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" placeholder="Username"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Password"/>
+        </div>
+        <button type="submit" class="button-submit">Sign in</button>
+    </form>
+</div>
+<script>
+  async function login(e) {
+    e.preventDefault()
+
+    try {
+      const payload = {
+        username: document.querySelector('input[name="username"]').value,
+        password: document.querySelector('input[name="password"]').value,
+      }
+      const res = await fetch('http://localhost:5000', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {'Content-Type': 'application/json'}
+      })
+      const data = await res.json()
+      if (res.status < 400) {
+        window.top.location = '/logs-view'
+      }
+      throw new Error('weujm')
+    } catch (e) {
+      window.document.body.reload()
+    }
+  }
+
+  document.querySelector('form.card').onsubmit = login
+</script>
+</body>
+</html>
