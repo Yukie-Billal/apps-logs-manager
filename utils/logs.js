@@ -12,35 +12,22 @@ if (!fs.existsSync(filePath)) {
 
 const getLogs = () => JSON.parse(fs.readFileSync("data/logs.json", "utf-8"))
 
-const getLastId = () => {
-   if (getLogs().length < 1) return 1
-   return getLogs()[getLogs().length - 1].id + 1
-}
+const getIncrementId = () => getLogs().length < 1 ? 1 : getLogs()[getLogs().length - 1].id + 1
 
-const setLogs = (logs) => {
-   fs.writeFile("data/logs.json", JSON.stringify(logs), () => { })
-}
+const setLogs = logs => fs.writeFile("data/logs.json", JSON.stringify(logs), () => { })
 
 export const saveLogs = (urgent, date, log, category, app_name) => {
    let logs = getLogs()
-   if (!category) {
-      console.log(
-         "Missing field categori", 'error'
-      )
-      return false
-   }
-   const id = getLastId()
+   if (!category) return console.log(`Missing field categori :  ${app_name} ${date}`, 'error')
+   const id = getIncrementId()
    logs.push({id, urgent, date, log, category, app_name})
    setLogs(logs)
-   console.log(`Terima kasih, Logs tersimpan ${date}`, 'success')
+   console.log(`Terima kasih, Logs tersimpan : ${app_name} ${date}`, 'success')
 }
 
 export const removeLog = (id) => {
    const oldLogs = getAllLogs()
-   const newLogs = oldLogs.filter(i => i.id!=id)
-   console.log(id)
-   console.log(oldLogs)
-   console.log(newLogs)
+   const newLogs = oldLogs.filter(i => i.id!==id)
    setLogs(newLogs)
    return oldLogs[oldLogs.map(l=>l.id).indexOf(id)]
 }

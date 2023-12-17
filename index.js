@@ -1,6 +1,9 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import {Server} from 'socket.io'
+import LogsRouter from './routes/logs.js'
+import WebRouter from './routes/web.js'
+import * as http from "http"
 
 const app = express()
 const server = http.createServer(app)
@@ -13,9 +16,6 @@ export const io = new Server(server, {
 app.use(bodyParser.json())
 app.use(express.static('assets'))
 
-import LogsRouter from './routes/logs.js'
-import WebRouter from './routes/web.js'
-import * as http from "http";
 app.use('/', WebRouter)
 app.use('/logs', LogsRouter)
 

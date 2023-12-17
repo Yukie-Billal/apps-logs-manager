@@ -11,10 +11,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     try {
         const {urgent, date= new Date(), log, category} = req.body
-        if (!urgent || !log || !category) {
-            res.status(400).json({message: 'Invalid parameter'})
-            return false
-        }
+        if (!urgent || !log || !category) return res.status(400).json({message: 'Invalid parameter'})
         saveLogs(urgent, date, log, category)
         res.status(200).json({urgent, date, log, category})
         io.emit('updated')
