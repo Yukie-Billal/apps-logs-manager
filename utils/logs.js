@@ -27,9 +27,9 @@ export const saveLogs = (urgent, date, log, category, app_name) => {
 
 export const removeLog = (id) => {
    const oldLogs = getAllLogs()
-   const newLogs = oldLogs.filter(i => i.id!==id)
+   const newLogs = oldLogs.filter(i => i.id!==parseInt(id))
    setLogs(newLogs)
-   return oldLogs[oldLogs.map(l=>l.id).indexOf(id)]
+   return oldLogs.filter(i => i.id===parseInt(id))
 }
 
 export const logsByUrgent = urgent => getLogs().filter(log => log.urgent===urgent)

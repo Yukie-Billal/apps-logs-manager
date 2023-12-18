@@ -39,63 +39,66 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+   document.addEventListener('DOMContentLoaded', function () {
       const wadah = document.querySelector("#wadah")
-      async function fetchData() {
-        const res = await fetch('http://localhost:3000/logs')
-        const data = await res.json()
-        if (!data instanceof Array) throw new Error("Invalid response format")
 
-        isi = ''
-        data.map(log => {
-          moment.locale('id')
-          isi += `
+      async function fetchData() {
+         const res = await fetch('http://localhost:3000/logs')
+         const data = await res.json()
+         if (!data instanceof Array) throw new Error("Invalid response format")
+
+         isi = ''
+         data.map(log => {
+            moment.locale('id')
+            isi += `
                     <tr>
                         <td>${getUrgent(log.urgent)}</td>
                         <td>${
-                            new Date(log.date) > new Date().setDate(new Date().getDate() - 1)
-                              ? moment(log.date, 'YYYY-MM-DD hh:mm:ss').fromNow()
-                              : moment(log.date).format('LLLL')
-                          }</td>
+               new Date(log.date) > new Date().setDate(new Date().getDate() - 1)
+                  ? moment(log.date, 'YYYY-MM-DD hh:mm:ss').fromNow()
+                  : moment(log.date).format('LLLL')
+            }</td>
                         <td>${log.log}</td>
                         <td>${getCategory(log.category)}</td>
-                        <td><button class="delete-button" data-id="${log.id}" onclick="deleteLog()">delete</button></td>
+                        <td>
+                            <button class="btn btn-danger btn-sm delete-button" data-id="${log.id}" onclick="() => deleteLog(e)">
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 `
-        })
-        wadah.innerHTML = isi
-        document.querySelectorAll('.delete-button').forEach(e => e.onclick = deleteLog(e))
+         })
+         wadah.innerHTML = isi
+         document.querySelectorAll('.delete-button').forEach(e => e.onclick = () => deleteLog(e))
       }
 
       fetchData()
 
       const getUrgent = (urgent) => {
-        let color = 'info text-white'
-        if (urgent === 'medium') color = 'warning text-white'
-        if (urgent === 'hard') color = 'danger text-white'
-        return `<button class="btn btn-sm btn-${color}">${urgent}</button>`
+         let color = 'info text-white'
+         if (urgent === 'medium') color = 'warning text-white'
+         if (urgent === 'hard') color = 'danger text-white'
+         return `<button class="btn btn-sm btn-${color}">${urgent}</button>`
       }
 
       const getCategory = (category) => {
-        let color = 'info text-white'
-        if (category === 'warning') color = 'warning text-white'
-        if (category === 'error') color = 'danger text-white'
-        return `<button class="btn btn-sm btn-${color}">${category}</button>`
+         let color = 'info text-white'
+         if (category === 'warning') color = 'warning text-white'
+         if (category === 'error') color = 'danger text-white'
+         return `<button class="btn btn-sm btn-${color}">${category}</button>`
       }
 
       function deleteLog(e) {
-        return async () => {
-          const id = e.getAttribute('data-id')
-          await fetch('http://localhost:5000/logs/' + id, {
+         const id = e.getAttribute('data-id')
+         fetch('http://localhost:3000/logs/' + id, {
             method: 'DELETE'
-          })
-          await fetchData()
-        }
+         }).then(r => fetchData())
       }
+
       const socket = io()
 
-    socket.on('updated', () => fetchData())
-  })
+      socket.on('updated', () => fetchData())
+   })
 </script>
 </body>
 </html>
